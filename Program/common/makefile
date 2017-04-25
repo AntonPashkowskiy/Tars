@@ -1,12 +1,12 @@
 CC=gcc
 CFLAGS=-c
-TESTSRC=monitoring.c
-TESTOBJ=$(TESTSRC:.c=.o)
-TESTNAME=monitoring_test
+TESTSRC=./utils/linked_list.c ./actions/monitor_action.c
+TESTOBJ=./*.o
+TESTNAME=common_test
 
-all: monitoring_test
+all: common_test
 
-monitoring_test: $(TESTOBJ)
+common_test: $(TESTOBJ)
 	$(CC) $(TESTOBJ) -o $(TESTNAME)
 
 $(TESTOBJ): $(TESTSRC)
