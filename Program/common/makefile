@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS=-c
-TESTSRC=./utils/linked_list.c ./actions/monitor_action.c
+CFLAGS=-c 
+TESTSRC=./utils/linked_list.c
 TESTOBJ=./*.o
 TESTNAME=common_test
 
