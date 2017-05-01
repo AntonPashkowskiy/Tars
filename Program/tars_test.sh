@@ -1,0 +1,1 @@
+cp tars_test.pth /usr/lib/python3.6/site-packages/
