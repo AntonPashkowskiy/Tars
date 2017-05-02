@@ -2,9 +2,10 @@ __delimeter = " : "
 
 class MonitorMessage:
     def __init__(self, event):
-        self._target_directory = None
-        self._target_file = None
-        self._event_type = None
+        self._target_directory = ""
+        self._target_file = ""
+        self._additional_information = ""
+        self._event_type = 0
         self._delimeter = " : "
 
     def __repr__(self):
@@ -14,7 +15,7 @@ class MonitorMessage:
         return __combine_message()
 
     def __combine_message(self):
-        return __delimeter.join([self._target_directory, self._target_file, self._event_descriptor])
+        return __delimeter.join([self._target_directory, self._target_file, self._additional_information, self._event_descriptor])
 
     @property
     def target_directory(self):
@@ -31,6 +32,14 @@ class MonitorMessage:
     @target_file.setter
     def target_file(self, value):
         self._target_file = value
+
+    @property
+    def additional_information(self):
+        return self._additional_information
+
+    @additional_information.setter
+    def additional_information(self, value):
+        self._additional_information = value
 
     @property
     def event_type(self):

@@ -1,11 +1,11 @@
 # Types of monitored events
 
-INNER_OBJECT_CREATED            = 0x001
-INNER_OBJECT_NAME_CHANGED       = 0x002
-INNER_OBJECT_CONTENT_CHANGED    = 0x004
-INNER_OBJECT_INCLUDED           = 0x008
-INNER_OBJECT_EXCLUDED           = 0x010
-INNER_OBJECT_DELETED            = 0x020
-DIRECTORY_NAME_CHANGED          = 0x040
-DIRECTORY_REPLACED              = 0x080
-DIRECTORY_DELETED               = 0x100
+FILE_CREATED                    = 0x001
+FILE_NAME_CHANGED               = 0x002
+FILE_CONTENT_CHANGED            = 0x004
+FILE_INCLUDED                   = 0x008
+FILE_EXCLUDED                   = 0x010
+FILE_DELETED                    = 0x020
+DIRECTORY_REPLACED              = 0x040
+DIRECTORY_DELETED               = 0x080
+FILE_METADATA_CHANGED           = 0x100
