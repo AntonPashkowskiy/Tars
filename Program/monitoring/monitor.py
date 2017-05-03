@@ -73,7 +73,7 @@ def process_recieved_events(monitor, monitor_messaging_manager, pair_events_list
             else:
                 for message in messages:
                     print(message or "lol")
-
+        else:
             if stop_events_processing_flag.is_set():
                 stop_events_processing_flag.clear()
                 break
@@ -85,17 +85,19 @@ def main():
     watch_paths_list = [ b'/home/anton/test/' ]
     pair_events_list = []
     stop_events_processing_flag = Event()
-    stop_events_processing_timer = Timer(10, stop_events_processing_flag.set)
 
     for path in watch_paths_list:
-        monitor.add_watch(path, inotify_constants.IN_MOVE | inotify_constants.IN_MOVED_TO | inotify_constants.IN_MOVED_FROM)
+        monitor.add_watch(path, inotify_constants.IN_MOVE | inotify_constants.IN_MOVED_TO | inotify_constants.IN_MOVED_FROM | inotify_constants.IN_CREATE)
 
     try:      
         while True:
             messages = monitor_messaging_manager.get_all_recieved_messages()
             process_recieved_messages(monitor, messages)
+            
+            stop_events_processing_timer = Timer(10, stop_events_processing_flag.set)
             stop_events_processing_timer.start()
             process_recieved_events(monitor, monitor_messaging_manager, pair_events_list, stop_events_processing_flag)
+
     except KeyboardInterrupt:
         for path in watch_paths_list:
             monitor.remove_watch(path)
