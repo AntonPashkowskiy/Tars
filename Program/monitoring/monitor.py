@@ -1,5 +1,6 @@
 from messaging.messaging_manager import MessagingManager, MessagingManagerType
 from common.monitoring import monitor_event_types as event_types
+from common.monitoring.monitor_message import MonitorMessage
 
 from inotify.adapters import Inotify
 from inotify import constants as inotify_constants
@@ -19,14 +20,35 @@ __event_type_to_flag_mapping = {
     event_types.DIRECTORY_DELETED: inotify_constants.IN_DELETE_SELF
 }
 
+def get_event_type_by_mask(event_mask):
+    for key in __event_type_to_flag_mapping.keys():
+        value = __event_type_to_flag_mapping.get(key)
+        if event_mask & value == value:
+            return key
+
 
 def get_message_by_event(event):
     (header, type_names, watch_path, file_name) = event
-    pprint(event)
+    monitor_message = MonitorMessage()
+    monitor_message.target_directory = watch_path.decode("utf-8")
+    monitor_message.target_file = file_name.decode("utf-8")
+    monitor_message.event_type = get_event_type_by_mask(header.mask)
+
+    return monitor_message
 
 
 def get_message_by_event_pair(first_event, second_event):
-    return "Event pair"
+    (first_event_header, _, watch_path, first_file_name) = first_event
+    (second_event_header, _, _, second_file_name) = second_event
+    monitor_message = MonitorMessage()
+
+    if first_event_header.mask == inotify_constants.IN_MOVED_FROM and second_event_header.mask == inotify_constants.IN_MOVED_TO:
+        monitor_message.target_directory = watch_path.decode("utf-8")
+        monitor_message.target_file = first_file_name.decode("utf-8")
+        monitor_message.additional_information = second_file_name.decode("utf-8")
+        monitor_message.event_type = event_types.FILE_NAME_CHANGED
+
+    return monitor_message
 
 
 def is_first_pair_event(event_header):
@@ -69,10 +91,10 @@ def process_recieved_events(monitor, monitor_messaging_manager, pair_events_list
 
             if messages is None:
                 message = get_message_by_event(event)
-                print(message or "lol")
+                print(message)
             else:
                 for message in messages:
-                    print(message or "lol")
+                    print(message)
         else:
             if stop_events_processing_flag.is_set():
                 stop_events_processing_flag.clear()
