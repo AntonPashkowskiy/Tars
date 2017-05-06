@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from messaging.messaging_manager import MessagingManager, MessagingManagerType
 from common.monitoring import monitor_event_types as event_types
 from common.monitoring.monitor_message import MonitorMessage

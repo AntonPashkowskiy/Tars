@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # Types of monitored events
 
 FILE_CREATED                    = 0x001
