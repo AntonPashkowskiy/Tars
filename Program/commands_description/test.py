@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from commands_description.commands_description import CommandsDescriptionModule
+from commands_description.commands_description_module import CommandsDescriptionModule
 
 
 def main():
@@ -9,4 +9,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
