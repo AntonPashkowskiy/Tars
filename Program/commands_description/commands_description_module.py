@@ -33,58 +33,64 @@ class CommandsDescriptionModule(CommandsDescriptionInterface):
         }
 
     def execute_command(self, command):
-        pass
+        if command is None:
+            raise ValueError("Command object is None.")
+        command_handler = self._commands_handler_table.get((command.target_block, command.action))
+
+        if command_handler is None:
+            raise NotImplementedError("Handler for print("")ed command is not exist")
+        command_handler(command.additional_information)
 
     def _create_setting_handler(self, setting):
-        pass
+        print("_create_setting_handler")
 
     def _read_settings_handler(self, parameters):
-        pass
+        print("_read_settings_handler")
 
     def _update_setting_handler(self, setting):
-        pass
+        print("_update_setting_handler")
 
     def _delete_setting_handler(self, setting):
-        pass
+        print("_delete_setting_handler")
 
     def _import_settings_handler(self, import_parameters):
-        pass
+        print("_import_settings_handler")
 
     def _export_settings_handler(self, export_parameters):
-        pass
+        print("_export_settings_handler")
 
     def _read_event_log_handler(self, parameters):
-        pass
+        print("_read_event_log_handler")
 
     def _restore_state_by_event_log_handler(self, parameters):
-        pass
+        print("_restore_state_by_event_log_handler")
 
     def _create_rule_handler(self, rule):
-        pass
+        print("_create_rule_handler")
 
     def _read_rules_handler(self, parameters):
-        pass
+        print("_read_rules_handler")
 
     def _update_rule_handler(self, rule):
-        pass
+        print("_update_rule_handler")
 
     def _delete_rule_handler(self, rule):
-        pass
+        print("_delete_rule_handler")
 
     def _import_rules_handler(self, parameters):
-        pass
+        print("_import_rules_handler")
 
     def _export_rules_handler(self, parameters):
-        pass
+        print("_export_rules_handler")
 
     def _execute_action_handler(self, parameters):
-        pass
+        print("_execute_action_handler")
 
     def _start_monitor_handler(self, parameters):
-        pass
+        print("_start_monitor_handler")
 
     def _stop_monitor_handler(self, parameters):
-        pass
+        print("_stop_monitor_handler")
 
 
 if __name__ == "__main__":
