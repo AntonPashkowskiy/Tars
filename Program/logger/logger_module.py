@@ -11,10 +11,16 @@ class LoggerModule(metaclass=Singleton):
                         filename=filename,
                         filemode='a')
 
-    def log_fs_event_information(self, fs_event_info):
+    def write_event_info(self, log_record):
         pass
 
-    def read_fs_events(self, start_date, end_date):
+    def read_event_info(self, log_record_id):
+        pass
+
+    def read_events_info_range(self, start_record_id, end_record_id):
+        pass
+
+    def read_events_info_daterange(self, start_date, end_date):
         pass
 
     @property
