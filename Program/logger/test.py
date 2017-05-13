@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from logger.logger_module import LoggerModule
 
 

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from common import constants
 from common.utils.singleton import Singleton
 

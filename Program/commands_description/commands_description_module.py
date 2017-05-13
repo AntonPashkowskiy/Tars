@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from commands_description.interfaces.commands_description_interface import CommandsDescriptionInterface
 from common.commands_description import target_block_types, action_types
+from common.settings import setting_keys
 from settings.settings_module import SettingsModule
 from logger.logger_module import LoggerModule
 
@@ -34,7 +35,7 @@ class CommandsDescriptionModule(CommandsDescriptionInterface):
             (target_block_types.MONITOR_INTERACTION_BLOCK, action_types.STOP): self._stop_monitor_handler
         }
         self._settings_module = SettingsModule()
-        self._logger_module = LoggerModule()
+        self._logger_module = LoggerModule(self.settings_module[setting_keys.LOG_FILE_NAME], None)
 
     def execute_command(self, command):
         if command is None:

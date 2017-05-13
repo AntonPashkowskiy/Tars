@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from common.utils.singleton import Singleton
 
 import logging as LOG
