@@ -15,3 +15,4 @@ GROUP_BY_MUSIC_ALBUM            = 0x006
 GROUP_BY_SUBJECT                = 0x007
 GROUP_BY_LANGUAGE               = 0x008
 GROUP_BY_GENRE                  = 0x009
+GROUP_BY_AUTHOR                 = 0x00A
