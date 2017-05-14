@@ -4,7 +4,8 @@ from common.utils.singleton import Singleton
 
 class RulesManager(metaclass=Singelton):
     def __init__(self):
-        pass
+        self._add_directory_callback = None
+        self._remove_directory_callback = None
 
     def create_rule(self, rule):
         pass
@@ -26,3 +27,7 @@ class RulesManager(metaclass=Singelton):
 
     def import_rules(self, source_file):
         pass
+
+    def add_directory_list_change_handlers(self, add_callback, remove_callback):
+        self._add_directory_callback = add_callback
+        self._remove_directory_callback = remove_callback

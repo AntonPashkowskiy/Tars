@@ -5,6 +5,7 @@ from common.settings import setting_keys
 from settings.settings_module import SettingsModule
 from logger.logger_module import LoggerModule
 from rules_management import RulesManager
+from monitor_interaction.monitor_interaction_manager import MonitorInteractionManager
 
 
 class CommandsDescriptionModule(CommandsDescriptionInterface):
@@ -38,6 +39,7 @@ class CommandsDescriptionModule(CommandsDescriptionInterface):
         self._settings_module = SettingsModule()
         self._logger_module = LoggerModule(self.settings_module[setting_keys.LOG_FILE_NAME], None)
         self._rules_manager = RulesManager()
+        self._monitor_interaction_manager = MonitorInteractionManager()
 
     def execute_command(self, command):
         if command is None:
@@ -106,14 +108,11 @@ class CommandsDescriptionModule(CommandsDescriptionInterface):
         self._rules_manager.export_rules(target_file)
 
     def _execute_action_handler(self, parameters):
-        print("_execute_action_handler")
+        target_file_path, action = parameters
+        self._monitor_interaction_manager.execute_action_immediately(target_file_path, action)
 
     def _start_monitor_handler(self, parameters):
-        print("_start_monitor_handler")
+        self._monitor_interaction_manager.start_monitor()
 
     def _stop_monitor_handler(self, parameters):
-        print("_stop_monitor_handler")
-
-
-if __name__ == "__main__":
-    pass
+        self._monitor_interaction_manager.stop_monitor()

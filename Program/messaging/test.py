@@ -4,8 +4,8 @@ from time import sleep
 
 
 def main():
-    server = MessagingManager(MessagingManagerType.SERVER)
-    client = MessagingManager(MessagingManagerType.CLIENT)
+    server = MessagingManager(MessagingManagerType.SERVER, "tcp://127.0.0.1:5555")
+    client = MessagingManager(MessagingManagerType.CLIENT, "tcp://127.0.0.1:5555")
     
     client.send_message("message 1")
     client.send_message("message 2")
