@@ -4,6 +4,7 @@ from common.commands_description import target_block_types, action_types
 from common.settings import setting_keys
 from settings.settings_module import SettingsModule
 from logger.logger_module import LoggerModule
+from rules_management import RulesManager
 
 
 class CommandsDescriptionModule(CommandsDescriptionInterface):
@@ -36,6 +37,7 @@ class CommandsDescriptionModule(CommandsDescriptionInterface):
         }
         self._settings_module = SettingsModule()
         self._logger_module = LoggerModule(self.settings_module[setting_keys.LOG_FILE_NAME], None)
+        self._rules_manager = RulesManager()
 
     def execute_command(self, command):
         if command is None:
@@ -86,22 +88,22 @@ class CommandsDescriptionModule(CommandsDescriptionInterface):
             #restoring code
 
     def _create_rule_handler(self, rule):
-        print("_create_rule_handler")
+        self._rules_manager.create_rule(rule)
 
     def _read_rules_handler(self, parameters):
-        print("_read_rules_handler")
+        return self._rules_manager.read_all_rules()
 
     def _update_rule_handler(self, rule):
-        print("_update_rule_handler")
+        self._rules_manager.update_rule(rule)
 
-    def _delete_rule_handler(self, rule):
-        print("_delete_rule_handler")
+    def _delete_rule_handler(self, rule_id):
+        self._rules_manager.delete_rule(rule_id)
 
-    def _import_rules_handler(self, parameters):
-        print("_import_rules_handler")
+    def _import_rules_handler(self, source_file):
+        self._rules_manager.import_rules(source_file)
 
-    def _export_rules_handler(self, parameters):
-        print("_export_rules_handler")
+    def _export_rules_handler(self, target_file):
+        self._rules_manager.export_rules(target_file)
 
     def _execute_action_handler(self, parameters):
         print("_execute_action_handler")
