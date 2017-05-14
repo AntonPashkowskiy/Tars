@@ -104,7 +104,7 @@ def process_recieved_events(monitor, monitor_messaging_manager, pair_events_list
             
 def main():
     monitor = Inotify()
-    monitor_messaging_manager = MessagingManager(MessagingManagerType.SERVER)
+    monitor_messaging_manager = MessagingManager(MessagingManagerType.SERVER, "tcp://127.0.0.1:5555")
     watch_paths_list = [ b'/home/anton/test/' ]
     pair_events_list = []
     stop_events_processing_flag = Event()
