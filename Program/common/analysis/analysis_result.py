@@ -5,7 +5,7 @@ class AnalysisResult:
     def __init__(self):
         self._is_directory = False
         self._name = None
-        self._extention = None
+        self._extension = None
         self._content_type = None
         self._size = None
         self._content_specific_info = None
@@ -27,12 +27,12 @@ class AnalysisResult:
         self._name = value
 
     @property
-    def extention(self):
-        return self._extention
+    def extension(self):
+        return self._extension
 
-    @extention.setter
-    def extention(self, value):
-        self._extention = value
+    @extension.setter
+    def extension(self, value):
+        self._extension = value
 
     @property
     def content_type(self):

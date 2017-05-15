@@ -66,8 +66,7 @@ class CommandsDescriptionModule(CommandsDescriptionInterface):
         key, value = setting
         self._settings_module[key] = value
 
-    def _delete_setting_handler(self, setting):
-        key, _ = setting
+    def _delete_setting_handler(self, key):
         del self._settings_module[key]
 
     def _import_settings_handler(self, import_parameters):

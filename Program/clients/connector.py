@@ -4,7 +4,7 @@ from commands_description.commands_description_module import CommandsDescription
 from threading import Event
 
 
-def process_incoming_command(serialized_command, command_description_module):
+def _process_incoming_command(serialized_command, command_description_module):
     pass
 
 
@@ -15,7 +15,9 @@ def main():
     while True:
         if not messaging_manager.is_recieved_messages_exists():
             continue
-        process_incoming_commands(messaging_manager.recieve_message(), command_description_module)
+        result = _process_incoming_commands(messaging_manager.recieve_message(), command_description_module)
+        if result is not None:
+            messaging_manager.send_message(result)
 
 
 if __name__ == "__main__":
