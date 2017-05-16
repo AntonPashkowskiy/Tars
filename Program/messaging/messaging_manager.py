@@ -31,8 +31,14 @@ class MessagingManagerBackgroudReciever(Thread):
         self._context = zmq.Context()
         self._socket = self._context.socket(zmq.PAIR)
 
-        _bind_socket_to_address(self._socket, messaging_manager_type, socket_binding_address)
-
+        self._bind_socket_to_address(self._socket, messaging_manager_type, socket_binding_address)
+    
+    def _bind_socket_to_address(self, socket, messaging_manager_type, binding_address):
+        if messaging_manager_type == MessagingManagerType.CLIENT:
+            self._socket.connect(binding_address)
+        elif messaging_manager_type == MessagingManagerType.SERVER:
+            self._socket.bind(binding_address)
+    
     def run(self):
         polling_delay = 100
 
