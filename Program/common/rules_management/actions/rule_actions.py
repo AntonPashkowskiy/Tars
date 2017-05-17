@@ -22,15 +22,10 @@ class DeleteFileRuleAction(RuleAction):
 
 
 class ReplaceFileRuleAction(RuleAction):
-    def __init__(self, is_create_target_directory, target_directory_name_template, target_path=None):
+    def __init__(self, target_directory_name_template, target_path=None):
         super().__init__(rule_actions_types.REPLACE_FILE):
-        self._is_create_target_directory = is_create_target_directory
         self._target_directory_name_template = target_directory_name_template
         self._target_path = target_path
-
-    @property
-    def is_create_target_directory(self):
-        return self._is_create_target_directory
 
     @property
     def target_directory_name_template(self):

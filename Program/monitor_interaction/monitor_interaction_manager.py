@@ -21,6 +21,8 @@ class MonitorMessagesProcessingLoop(Thread):
 
 class MonitorInteractionManager(metaclass=Singleton):
     def __init__(self):
+        self._send_queue = None
+        self._receive_queue = None
         self._logger_module = None
         self._settings_module = None
         self._messaging_manager = MessagingManager(MessagingManagerType.CLIENT, "tcp://127.0.0.1:5555")

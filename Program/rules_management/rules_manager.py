@@ -2,7 +2,7 @@
 from common.utils.singleton import Singleton
 
 
-class RulesManager(metaclass=Singelton):
+class RulesManager(metaclass=Singleton):
     def __init__(self):
         self._add_directory_callback = None
         self._remove_directory_callback = None
@@ -16,7 +16,7 @@ class RulesManager(metaclass=Singelton):
     def delete_rule(self, rule_id):
         pass
 
-    def read_all_rules(self, rule):
+    def read_all_rules(self):
         pass
 
     def get_rules(self, event_info, analyze_results=None):

@@ -7,7 +7,7 @@ class RuleFileConstraint:
         self._target_event_types = []
         self._target_content_types = []
         self._target_name_template = None
-        self._target_extention_template = None
+        self._target_extension_template = None
         self._target_file_max_size = None
         self._target_file_min_size = None
 
@@ -44,12 +44,12 @@ class RuleFileConstraint:
         self._target_name_template = value
 
     @property
-    def target_extention_template(self):
-        return self._target_extention_template
+    def target_extension_template(self):
+        return self._target_extension_template
 
-    @target_extention_template.setter
-    def target_extention_template(self, value):
-        self._target_extention_template = value
+    @target_extension_template.setter
+    def target_extension_template(self, value):
+        self._target_extension_template = value
 
     @property
     def target_file_max_size(self):
