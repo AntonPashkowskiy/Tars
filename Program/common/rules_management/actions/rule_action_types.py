@@ -3,8 +3,8 @@
 
 # common actions
 DELETE_FILE                     = 0x001
-REPLACE_FILE                    = 0x002
-RENAME_FILE                     = 0x003
+RENAME_FILE                     = 0x002
+REPLACE_FILE                    = 0x003
 
 # music actions 
 GROUP_BY_MUSIC_BAND             = 0x004

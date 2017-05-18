@@ -73,6 +73,10 @@ def process_possible_pair_event(current_event, pair_event_list):
         if previous_watch_path == watch_path and is_second_pair_event(header):
             pair_events_message = get_message_by_event_pair(previous_event, current_event)
             return [ pair_events_message ]
+        elif is_first_pair_event(header):
+            pair_event_list.append(current_event)
+            previous_event_message = get_message_by_event(previous_event)
+            return [ previous_event_message ]
         else:
             previous_event_message = get_message_by_event(previous_event)
             current_event_message = get_message_by_event(current_event)
@@ -80,22 +84,22 @@ def process_possible_pair_event(current_event, pair_event_list):
     return None
 
 
-def process_recieved_messages(monitor, messages_list):
+def process_received_messages(monitor, messages_list):
     print("message processing")
     pass
 
 
-def process_recieved_events(monitor, monitor_messaging_manager, pair_events_list, stop_events_processing_flag):
+def process_received_events(monitor, monitor_messaging_manager, pair_events_list, stop_events_processing_flag):
     for event in monitor.event_gen():
         if event is not None:
             messages = process_possible_pair_event(event, pair_events_list)
 
             if messages is None:
                 message = get_message_by_event(event)
-                print(message)
+                monitor_messaging_manager.send_message(str(message))
             else:
                 for message in messages:
-                    print(message)
+                    monitor_messaging_manager.send_message(str(message))
         else:
             if stop_events_processing_flag.is_set():
                 stop_events_processing_flag.clear()
@@ -114,12 +118,12 @@ def main():
 
     try:      
         while True:
-            messages = monitor_messaging_manager.get_all_recieved_messages()
-            process_recieved_messages(monitor, messages)
+            messages = monitor_messaging_manager.get_all_received_messages()
+            process_received_messages(monitor, messages)
             
             stop_events_processing_timer = Timer(10, stop_events_processing_flag.set)
             stop_events_processing_timer.start()
-            process_recieved_events(monitor, monitor_messaging_manager, pair_events_list, stop_events_processing_flag)
+            process_received_events(monitor, monitor_messaging_manager, pair_events_list, stop_events_processing_flag)
 
     except KeyboardInterrupt:
         for path in watch_paths_list:

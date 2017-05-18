@@ -19,14 +19,14 @@ class MessagingManagerType(Enum):
     SERVER = 2
 
 
-class MessagingManagerBackgroudReciever(Thread):
+class MessagingManagerBackgroudReceiver(Thread):
     def __init__(self, messaging_manager_type, socket_binding_address, queues, events):
         super().__init__()
-        send_queue, recieve_queue = queues
+        send_queue, receive_queue = queues
         stop_event = events
 
         self._send_queue = send_queue
-        self._recieve_queue = recieve_queue
+        self._receive_queue = receive_queue
         self._stop_event = stop_event
         self._context = zmq.Context()
         self._socket = self._context.socket(zmq.PAIR)
@@ -47,7 +47,7 @@ class MessagingManagerBackgroudReciever(Thread):
                 self._socket.send_unicode(self._send_queue.get())
             events = self._socket.poll(polling_delay)
             if events != 0:
-                self._recieve_queue.put(self._socket.recv(flags=zmq.NOBLOCK))
+                self._receive_queue.put(self._socket.recv(flags=zmq.NOBLOCK))
         self._socket.close()
         self._context.destroy()
 
@@ -55,11 +55,11 @@ class MessagingManagerBackgroudReciever(Thread):
 class MessagingManager(MessagingInterface):
     def __init__(self, messaging_manager_type, socket_binding_address):
         self._send_queue = Queue()
-        self._recieve_queue = Queue()
+        self._receive_queue = Queue()
         self._background_worker_stop_event = Event()
-        self._background_worker = MessagingManagerBackgroudReciever(messaging_manager_type, \
+        self._background_worker = MessagingManagerBackgroudReceiver(messaging_manager_type, \
             socket_binding_address, \
-            (self._send_queue, self._recieve_queue), \
+            (self._send_queue, self._receive_queue), \
             self._background_worker_stop_event)
         self._background_worker.start()
 
@@ -69,13 +69,13 @@ class MessagingManager(MessagingInterface):
     def send_message(self, message):
         self._send_queue.put(message)
 
-    def is_recieved_messages_exists(self):
-        return self._recieve_queue.qsize() != 0
+    def is_received_messages_exists(self):
+        return self._receive_queue.qsize() != 0
 
-    def recieve_message(self):
-        if self._recieve_queue.qsize() != 0:
-            return self._recieve_queue.get().decode("utf-8")
+    def receive_message(self):
+        if self._receive_queue.qsize() != 0:
+            return self._receive_queue.get().decode("utf-8")
         return None
 
-    def get_all_recieved_messages(self):
+    def get_all_received_messages(self):
         return []
