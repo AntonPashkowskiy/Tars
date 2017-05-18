@@ -20,7 +20,18 @@ class RulesManager(metaclass=Singleton):
         pass
 
     def get_rules(self, event_info, analyze_results=None):
-        pass
+        all_suitable_rules = self._get_all_suitable_rules(event_info, analyze_results)
+        
+        if self._is_ignore_rule_exist(all_suitable_rules):
+            return []
+        
+        specific_sorted_rules = self._sort_by_specific_level(all_suitable_rules)
+        top_specific_rules = self._get_top_specific_rules(specific_sorted_rules)
+        delete_rules = self._get_rules_by_action_type(top_specific_rules, action_types.DELETE_FILE)
+        
+        if len(delete_rules) != 0:
+            return [ delete_rules[0] ]
+        return self._get_final_rules_sequence(specific_sorted_rules)
 
     def export_rules(self, target_file):
         pass
