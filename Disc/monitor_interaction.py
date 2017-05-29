@@ -9,7 +9,17 @@ class MonitorMessagesProcessingLoop(Thread):
         self._messaging_manager = messaging_manager
 
     def _process_messages(self, messages):
-        pass
+        for message in messages:
+            event = _parse_message(message)
+            analysis_result = FileAnalyzer.analyse_file(event.target_file)
+            rules = _rules_manager.get_rules(event, analysis_result)
+            
+            if not len(rules):
+                pass
+            elif _is_delete_rule(rules[0]):
+                _delete_file(event.target_file, rules[0])
+            else:
+                _apply_rules(event, rules)
 
     def run(self):
         while not self._stop_event.is_set():
